@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+
+# This file needs lots of refactoring
+
+if [ -z "$PS1" ]; then
+  echo -e "${COLOR_RED}You should source this, not run it, for example: source link${COLOR_NC}\n\n"
+fi
+
+rm ~/.bash_profile
+rm ~/.bashrc
+rm ~/.bashrc_help
+rm ~/.bashrc_app_specific
+
+ln -s ~/dotfiles/bash_profile ~/.bash_profile
+ln -s ~/dotfiles/bashrc ~/.bashrc
+ln -s ~/dotfiles/bashrc_help ~/.bashrc_help
+ln -s ~/dotfiles/bashrc_app_specific ~/.bashrc_app_specific
+
+# vim
+ rm ~/.vimrc
+ rm ~/.gvimrc
+ rm ~/.vim
+# 
+ ln -s ~/dotfiles/vimconfig/vimrc ~/.vimrc
+ ln -s ~/dotfiles/vimconfig/gvimrc ~/.gvimrc
+ ln -s ~/dotfiles/vimconfig ~/.vim
+
+# netbeans
+#rm ~/.netbeans/6.0/config
+#ln -s ~/dotfiles/netbeans/6.0/config ~/.netbeans/6.0/config
+
+# subversion
+# rm ~/.subversion
+# ln -s ~/dotfiles/subversion ~/.subversion
+
+# autotest
+rm ~/.autotest
+ln -s ~/dotfiles/autotest ~/.autotest
+
+# irb
+rm ~/.irbrc
+ln -s ~/dotfiles/irbrc ~/.irbrc
+
+# git
+rm ~/.gitconfig
+rm ~/.gitignore
+rm ~/.gitattributes
+ln -s ~/dotfiles/gitconfig ~/.gitconfig
+ln -s ~/dotfiles/gitignore ~/.gitignore
+ln -s ~/dotfiles/gitattributes ~/.gitattributes
+
+source ~/.bash_profile
