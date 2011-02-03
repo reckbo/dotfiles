@@ -1,0 +1,11 @@
+# IMAP Settings
+set imap_user=""
+set folder=""
+set spoolfile=""
+set record="" #set record=imaps://imap.gmail.com/Sent            
+set postponed="" #set postponed=imaps://imap.gmail.com/Drafts        
+
+# Sending Mail
+set realname = ""
+set from = ""
+set smtp_url="" #set smtp_url="smtps://username\@gmail.com@smtp.gmail.com/" 
