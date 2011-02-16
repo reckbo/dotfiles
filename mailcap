@@ -1,0 +1,36 @@
+##############
+# Interactive #
+###############
+application/octet-stream; audacious2 '%s'; test=test -n "$DISPLAY"
+application/pdf; xpdf -fullscreen '%s'
+application/postscript; gv '%s'
+audio/*; mpg123 '%s'
+image/*; gqview '%s'
+text/html; /spl_unsupported/pnlfs/reckbo/software/lynx2-8-7/lynx -nomargins -display_charset=iso8859-1 %s; nametemplate=%s.html
+#text/html; lynx -nomargins -display_charset=iso8859-1 %s; nametemplate=%s.html; test=test -z "`pidof firefox-bin`"
+text/html; firefox %s\;exit 1; nametemplate=%s.html; test=test -n "$DISPLAY"
+video/*; mplayer -loop 0 '%s'
+
+##########
+# Inline #
+##########
+application/pdf; pdftotext -enc Latin1 '%s' -; copiousoutput; nametemplate=%s.pdf
+application/postscript; ps2ascii %s; copiousoutput
+
+image/*; exiftool -common '%s'; copiousoutput
+#image/*; anytopnm %s | pnmscale -xsize 80 -ysize 50 | ppmtopgm | pgmtopbm | pbmtoascii ; copiousoutput
+text/html; lynx -nomargins -display_charset=iso8859-1 -dump %s; copiousoutput; nametemplate=%s.html
+
+application/x-bzip2; octet-filter %s; copiousoutput
+application/x-cpio; cpio -tvF --quiet %s; copiousoutput
+application/x-diff-gzip; zcat %s; copiousoutput
+application/x-gtar; tar tvf %s; copiousoutput
+application/x-gunzip; gzcat; copiousoutput
+application/x-gunzip; octet-filter %s; copiousoutput
+application/x-gzip; octet-filter %s; copiousoutput
+application/x-rar-compressed; rar v %s; copiousoutput
+application/x-tar-gz; tar tvfz %s; copiousoutput
+application/x-tar; tar tvf %s; copiousoutput
+application/x-zip-compressed; unzip -v %s; copiousoutput
+application/zip; unzip -v %s; copiousoutput
+
