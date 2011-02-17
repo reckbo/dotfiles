@@ -1,7 +1,8 @@
-source ~/.muttrc_local
-
 # Sending Mail
 set copy=yes      
+set sendmail_wait=-1
+set query_command="goobook query '%s'"
+bind editor <Tab> complete-query
 
 # Reading Mail
 set timeout=10  
@@ -14,6 +15,8 @@ ignore * # ignore all headers except for ...
 unignore Date: From: To: CC: Bcc: Subject:
 hdr_order Subject: Date: From: To: CC: Bcc:
 set index_format="%{%b %d} %-15.15L [%Z] %s" # custom index format
+set imap_check_subscribed
+#set edit_headers=yes
 
 # Composing Mail
 set editor="vim"     
@@ -21,7 +24,6 @@ set markers=no
 #set signature=~/.sig  
 set include=yes     
 set forward_format="Fwd: %s"                
-
 
 # Pretty Colors
 color status white blue
@@ -40,3 +42,7 @@ color header red default "^X-.*:"
 # View Special Formats
 set mailcap_path=~/.mailcap
 #auto_view text/html # auto-render html inline mutt
+
+macro index,pager "a" "<pipe-message>goobook add<return>" "add the sender address to Google contacts"
+
+source ~/.muttrc_local
