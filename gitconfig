@@ -21,7 +21,8 @@
 
 [core]
 	autocrlf = input
-	editor = mvim -f
+	editor = /usr/bin/vim
+	excludesfile = /home/reckbo/.gitignore
 [alias]
 	st = status
 	co = checkout
@@ -30,3 +31,13 @@
 	staged = diff --cached
 	; lg = log --pretty=oneline --date-order --graph --all --decorate
   lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+[user]
+	;email = reckbo@bwh.harvard.edu
+	;name = reckbo
+	;email = reckbo@bwh.harvard.edu
+	name = pnlbwh
+	email = pnlbwh@gmail.com
+[github]
+	user = pnlbwh
+[credential]
+	helper = cache --timeout=3600
