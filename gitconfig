@@ -21,7 +21,7 @@
 
 [core]
 	autocrlf = false
-	editor = /usr/local/bin/vim
+	editor = /usr/bin/vim
 	excludesfile = /home/reckbo/.gitignore
 [alias]
 	st = status
@@ -34,7 +34,6 @@
 [user]
     email = reckbo@bwh.harvard.edu
     name = reckbo
-	;email = reckbo@bwh.harvard.edu
 [github]
 	user = reckbo
 [credential]
