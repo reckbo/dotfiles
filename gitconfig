@@ -20,8 +20,8 @@
         untracked = cyan
 
 [core]
-	autocrlf = input
-	editor = /usr/bin/vim
+	autocrlf = false
+	editor = /usr/local/bin/vim
 	excludesfile = /home/reckbo/.gitignore
 [alias]
 	st = status

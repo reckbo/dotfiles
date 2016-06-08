@@ -1,4 +1,8 @@
-alias reloadbash='source ~/bash_profile'
+export GITAWAREPROMPT=~/.bash/git-aware-prompt
+source "${GITAWAREPROMPT}/main.sh"
+export PS1="\[$txtgrn\]\w \[$txtcyn\]\$git_branch\[$txtred\]\$git_dirty\[$txtrst\]\$ "
+
+alias reloadbash='source ~/.bashrc'
 
 # Colors ----------------------------------------------------------
 export TERM=xterm-color
@@ -12,39 +16,6 @@ if [ "$OS" = "linux" ] ; then
 else
   alias ls='ls -G'  # OS-X SPECIFIC - the -G command in OS-X is for colors, in Linux it's no groups
 fi
-
-# Setup some colors to use later in interactive shell or scripts
-export COLOR_NC='\033[0m' # No Color
-export COLOR_WHITE='\033[1;37m'
-export COLOR_BLACK='\033[0;30m'
-export COLOR_BLUE='\033[0;34m'
-export COLOR_LIGHT_BLUE='\033[1;34m'
-export COLOR_GREEN='\033[0;32m'
-export COLOR_LIGHT_GREEN='\033[1;32m'
-export COLOR_CYAN='\033[0;36m'
-export COLOR_LIGHT_CYAN='\033[1;36m'
-export COLOR_RED='\033[0;31m'
-export COLOR_LIGHT_RED='\033[1;31m'
-export COLOR_PURPLE='\033[0;35m'
-export COLOR_LIGHT_PURPLE='\033[1;35m'
-export COLOR_BROWN='\033[0;33m'
-export COLOR_YELLOW='\033[1;33m'
-export COLOR_GRAY='\033[1;30m'
-export COLOR_LIGHT_GRAY='\033[0;37m'
-alias colorslist="set | egrep 'COLOR_\w*'"  # lists all the colors
-
-
-
-# History ----------------------------------------------------------
-export HISTCONTROL=ignoredups
-#export HISTCONTROL=erasedups
-export HISTFILESIZE=3000
-export HISTIGNORE="ls:cd:[bf]g:exit:..:...:ll:lla"
-alias h=history
-hf(){ 
-  grep "$@" ~/.bash_history
-}
-
 
 
 # Misc -------------------------------------------------------------
@@ -65,7 +36,6 @@ if [ -f /opt/local/etc/bash_completion ]; then
 	. /opt/local/etc/bash_completion
 fi
 
-
 # Use vi command mode
 #bind "set editing-mode vi"
 set -o vi
@@ -73,45 +43,6 @@ set -o vi
 
 # git completion
 source ~/dotfiles/git-completion.bash
-
-# Prompts ----------------------------------------------------------
-#git_dirty_flag() {
-  #git status 2> /dev/null | grep -c : | awk '{if ($1 > 0) print "⚡"}'
-#}
-
-prompt_func() {
-    previous_return_value=$?;
-    prompt="\[\033]0;${USER} ${PWD}\007\]\[${COLOR_GREEN}\]\w\[${COLOR_BLUE}\]$(__git_ps1)\[${COLOR_NC}\] "
-    #prompt="\033]0;${PWD}\007\[${COLOR_GREEN}\]\w\[${COLOR_GRAY}\]$(__git_ps1)\[${COLOR_NC}\] "
-    # prompt="\[${COLOR_GREEN}\]\w\[${COLOR_GRAY}\]$(__git_ps1)\[${COLOR_YELLOW}\]$(git_dirty_flag)\[${COLOR_NC}\] "
-
-    if test $previous_return_value -eq 0
-    then
-        PS1="${prompt}> "
-    else
-        PS1="${prompt}\[${COLOR_RED}\]> \[${COLOR_NC}\]"
-    fi
-}
-#PROMPT_COMMAND=prompt_func
-PS1="\[\033]0;${USER} ${PWD}\007\]\[${COLOR_GREEN}\]\w\[${COLOR_BLUE}\]$(__git_ps1)\[${COLOR_NC}\] > "
-
-# export PS1="\[${COLOR_GREEN}\]\w\[${COLOR_NC}\] > "  # Primary prompt with only a path
-# export PS1="\[${COLOR_RED}\]\w > \[${COLOR_NC}\]"  # Primary prompt with only a path, for root, need condition to use this for root
-# export PS1="\[${COLOR_GRAY}\]\u@\h \[${COLOR_GREEN}\]\w > \[${COLOR_NC}\]"  # Primary prompt with user, host, and path 
-# This runs before the prompt and sets the title of the xterm* window.  If you set the title in the prompt
-# weird wrapping errors occur on some systems, so this method is superior
-#export PROMPT_COMMAND='echo -ne "\033]0;${PWD##*/} ${USER}@${HOSTNAME%%.*}"; echo -ne "\007"'  # user@host path
-
-export PS2='> '    # Secondary prompt
-export PS3='#? '   # Prompt 3
-export PS4='+'     # Prompt 4
-
-function xtitle {  # change the title of your xterm* window
-  unset PROMPT_COMMAND
-  echo -ne "\033]0;$1\007" 
-}
-
-
 
 # Navigation -------------------------------------------------------
 alias ..='cd ..'
@@ -135,36 +66,9 @@ source ~/.dirs  # Initialization for the above 'save' facility: source the .sdir
 shopt -s cdable_vars # set the bash option so that no '$' is required when using the above facility
 
 
-
 # Editors ----------------------------------------------------------
-#export EDITOR='mate -w'  # OS-X SPECIFIC - TextMate, w is to wait for TextMate window to close
-#export EDITOR='gedit'  #Linux/gnome
 export EDITOR='vim'  #Command line
 export GIT_EDITOR='vim'
-#alias gvim='/Applications/MacVim.app/Contents/MacOS/vim -g'
-alias v=vim
-# Use mvim in cl/bin to open MacVim
-
-
-
-# Security ---------------------------------------------------------
-
-# Folder shared by a group
-# chmod g+s directory 
-#find /foo -type f -print | xargs chmod g+rw,o-rwx,u+rw
-#find /foo -type d -print | xargs chmod g+rwxs,o-rwx,u+rwx
-
-# this might work just the same (not tested)
-# chmod -R g+rwXs,o-rwx,u+rwX /foo
-
-
-
-# Sluething----------------------------------------------------
-findportuser() {
-    lsof -i :"$1"
-}
-
-
 
 # Other aliases ----------------------------------------------------
 alias ll='ls -hl'
@@ -190,42 +94,14 @@ fi
 
 alias systail='tail -f /var/log/system.log'
 alias m='more'
-alias rak='rak -a'
-
 alias df='df -h' # Show disk usage
 
 # Shows most used commands, cool script I got this from: http://lifehacker.com/software/how-to/turbocharge-your-terminal-274317.php
 alias profileme="history | awk '{print \$2}' | awk 'BEGIN{FS=\"|\"}{print \$1}' | sort | uniq -c | sort -n | tail -n 20 | sort -nr"
-
 alias untar="tar xvzf"
-
 alias cp_folder="cp -Rpv" #copies folder and all sub files and folders, preserving security and dates
 
-killhard() {
-    kill -9 "$1"
-}
-
-
-
 # Bring in the other files ----------------------------------------------------
-source ~/.bashrc_help
-source ~/.bashrc_app_specific
 if [ -f ~/.bashrc_local ]; then
 	source ~/.bashrc_local
 fi
-
-
-# Test ------------------------------------------------------------------------ 
-
-#if [ "$OS" = "linux" ] ; then
-#elif
-#else
-#fi
-
-#if [ -z "$PS1" ]; then
-  #echo 'non-interactive shell'
-  ### non-interactive shells (only)
-#else
-  #echo 'interactive shell'
-  ### interactive shells (only)
-#fi

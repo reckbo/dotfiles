@@ -70,3 +70,19 @@ echo -ne "Server time is: "; date
 # setColor
 # clear
 # 
+
+##
+# Your previous /Users/ryan/.bash_profile file was backed up as /Users/ryan/.bash_profile.macports-saved_2015-02-26_at_11:29:06
+##
+
+# MacPorts Installer addition on 2015-02-26_at_11:29:06: adding an appropriate PATH variable for use with MacPorts.
+export PATH="/opt/local/bin:/opt/local/sbin:$PATH"
+# Finished adapting your PATH environment variable for use with MacPorts.
+
+# OPAM configuration
+. /Users/ryan/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
+
+export PATH=":~/j64-803/bin/:$PATH"
+
+# added by Anaconda2 4.0.0 installer
+export PATH="//anaconda/bin:$PATH"
