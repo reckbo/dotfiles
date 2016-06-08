@@ -9,7 +9,7 @@ export TERM=xterm-color
 export GREP_OPTIONS='--color=auto' GREP_COLOR='1;32'
 export CLICOLOR=1 
 
-if [ "$OS" = "linux" ] ; then
+if [[ "$OSTYPE" == *linux* ]] ; then
   alias ls='ls --color=auto' # For linux, etc
   # ls colors, see: http://www.linux-sxs.org/housekeeping/lscolors.html
   export LS_COLORS='di=1:fi=0:ln=31:pi=5:so=5:bd=5:cd=5:or=31:mi=0:ex=35:*.rb=90'  #LS_COLORS is not supported by the default ls command in OS-X
