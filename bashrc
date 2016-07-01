@@ -49,23 +49,6 @@ alias ..='cd ..'
 alias ...='cd .. ; cd ..'
 cl() { cd $1; ls -la; } 
 
-# I got the following from, and mod'd it: http://www.macosxhints.com/article.php?story=20020716005123797
-#    The following aliases (save & show) are for saving frequently used directories
-#    You can save a directory using an abbreviation of your choosing. Eg. save ms
-#    You can subsequently move to one of the saved directories by using cd with
-#    the abbreviation you chose. Eg. cd ms  (Note that no '$' is necessary.)
-if [ ! -f ~/.dirs ]; then  # if doesn't exist, create it
-  touch ~/.dirs
-fi
-
-alias show='cat ~/.dirs'
-save (){
-  command sed "/!$/d" ~/.dirs > ~/.dirs1; \mv ~/.dirs1 ~/.dirs; echo "$@"=\"`pwd`\" >> ~/.dirs; source ~/.dirs ; 
-}  #"
-source ~/.dirs  # Initialization for the above 'save' facility: source the .sdirs file 
-shopt -s cdable_vars # set the bash option so that no '$' is required when using the above facility
-
-
 # Editors ----------------------------------------------------------
 export EDITOR='vim'  #Command line
 export GIT_EDITOR='vim'
@@ -77,7 +60,6 @@ alias la='ls -a'
 alias lla='ls -lah'
 
 # Search
-alias g='grep -i'  # Case insensitive grep
 gns(){ # Case insensitive, excluding svn folders
   find . -path '*/.svn' -prune -o -type f -print0 | xargs -0 grep -I -n -e "$1"
 }
@@ -86,15 +68,9 @@ alias f='find . -iname'
 # Misc
 alias ducks='du -cksh * | sort -rn|head -11' # Lists folders and files sizes in the current folder
 
-if [ "$OS" = "linux" ] ; then
-	alias processes_all='ps -aulx'
-else
+if [ "$OS" = "Darwin" ] ; then
 	alias top='top -o cpu' # os x
 fi
-
-alias systail='tail -f /var/log/system.log'
-alias m='more'
-alias df='df -h' # Show disk usage
 
 # Shows most used commands, cool script I got this from: http://lifehacker.com/software/how-to/turbocharge-your-terminal-274317.php
 alias profileme="history | awk '{print \$2}' | awk 'BEGIN{FS=\"|\"}{print \$1}' | sort | uniq -c | sort -n | tail -n 20 | sort -nr"
