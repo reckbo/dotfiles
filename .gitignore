@@ -45,3 +45,5 @@ doc/tags
 *.nhdr
 *.nii.gz
 *.mgz
+
+.#*

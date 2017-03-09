@@ -21,7 +21,7 @@
 
 [core]
 	autocrlf = false
-	editor = /usr/bin/vim
+	editor = vim
 	excludesfile = /home/reckbo/.gitignore
 [alias]
 	st = status
