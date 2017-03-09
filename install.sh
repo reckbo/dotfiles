@@ -8,7 +8,7 @@ if [ ! -d ~/.bash/git-aware-prompt ]; then
 fi
 
 for d in .*; do
-    if [ -f $d ]; then
+    if [ -f $d ] && [ "$d" != ".mbsyncrc" ]; then
         src=$PWD/$d
         dest=~/$d
         if [ ! -f "$dest" ]; then
