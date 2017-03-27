@@ -496,12 +496,14 @@ you should place your code here."
           ))
 
   ;; tell message-mode how to send mail
-  (setq message-send-mail-function 'smtpmail-send-it)
-    (setq smtpmail-smtp-server "localhost")
-    (setq smtpmail-smtp-service 1025)
-    ;; (setq mail-host-address "reckbo@bwh.harvard.edu")
-(setq mail-host-address "re098@partners.org")
-    (setq smtpmail-smtp-stream-type 'plain)
+  (setq message-send-mail-function 'smtpmail-send-it
+    smtpmail-smtp-server "localhost"
+    smtpmail-smtp-service 1025
+    smtpmail-smtp-stream-type 'plain
+    smtp-debug-info t
+    mail-host-address "reckbo@bwh.harvard.edu"
+    ;;mail-host-address "re098@partners.org"
+     )
 
   (setq
     user-mail-address "reckbo@bwh.harvard.edu"
