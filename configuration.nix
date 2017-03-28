@@ -34,14 +34,19 @@
    nixpkgs.config = {
 	   allowUnfree = true;
 	   firefox = {
-		   enableGoogleTalkPlugin = true;
+	   #enableGoogleTalkPlugin = true;
 		   enableAdobeFlash = true;
 	   };
-	   chromium = {
-		   enablePepperFlash = true;
-		   enablePepperPDF = true;
-	   };
+	   #chromium = {
+	#	   enablePepperFlash = true;
+	#	   enablePepperPDF = true;
+	#   };
    };
+
+  hardware.opengl = {
+    driSupport = true;
+    driSupport32Bit = true;
+  };
 
    environment.systemPackages = with pkgs; [
      wget
@@ -51,6 +56,7 @@
      chromium
      davmail
      isync
+     html2text
      aspell
      ghc
      stack
@@ -60,6 +66,7 @@
      pythonPackages.yapf
      gitAndTools.hub
      pandoc
+     jags
    ];
 
   # List services that you want to enable:
