@@ -26,8 +26,9 @@ withpaths() {
     echo "Found $dir/paths.yml, exporting variables..."
     while IFS=":" read -r key val; do
         path="$(echo -e "${val}" | sed -e 's/^[[:space:]]*//')"
-        echo "export $key=$PWD/$path"
-        export $key=$PWD/$path
+        patha=$(readlink -m $dir/$path)
+        echo "export $key=$patha"
+        export $key=$patha
     done < $yml
 }
 eval "$(direnv hook bash)"

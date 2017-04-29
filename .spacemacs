@@ -333,8 +333,8 @@ values."
    ;; If non nil smooth scrolling (native-scrolling) is enabled. Smooth
    ;; scrolling overrides the default behavior of Emacs which recenters the
    ;; point when it reaches the top or bottom of the screen. (default t)
-   ;; dotspacemacs-smooth-scrolling nil
-   dotspacemacs-smooth-scrolling t
+   dotspacemacs-smooth-scrolling nil
+   ;; dotspacemacs-smooth-scrolling t
    ;; If non nil line numbers are turned on in all `prog-mode' and `text-mode'
    ;; derivatives. If set to `relative', also turns on relative line numbers.
    ;; (default nil)
@@ -386,6 +386,13 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
+
+  ;; R - map ; to <-
+  ;; (setq ess-smart-S-assign-key ";")
+  ;; (ess-toggle-S-assign nil)
+  ;; (ess-toggle-S-assign nil)
+  ;; (ess-toggle-underscore nil) ; leave underscore key alone!
+
   (add-to-list 'exec-path "~/.local/bin/")
   (define-key global-map (kbd "C-+") 'text-scale-increase)
   (define-key global-map (kbd "C--") 'text-scale-decrease)
