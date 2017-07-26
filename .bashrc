@@ -1,8 +1,6 @@
 # . ~/hub_completion.sh
-. ~/gitcompletion.sh
-source ~/datasets.sh
+. ~/dotfiles/gitcompletion.sh
 export soft=~/soft
-export PATH=~/soft/bin:$PATH
 
 # Exports the key value pairs in paths.yml if it exists
 # E.g.
@@ -13,7 +11,7 @@ export PATH=~/soft/bin:$PATH
 withpaths() {
     dir='.'
     if [ -n "${1}" ]; then
-        dir=$1
+        dir=$(readlink -m $1)
     fi
     if [ -f "$dir/paths.yml" ]; then
         yml="$dir/paths.yml"
@@ -26,7 +24,13 @@ withpaths() {
     echo "Found $dir/paths.yml, exporting variables..."
     while IFS=":" read -r key val; do
         path="$(echo -e "${val}" | sed -e 's/^[[:space:]]*//')"
-        patha=$(readlink -m $dir/$path)
+        if [ "$key" == "caseid" ]; then
+            echo "export $key=$path"
+            export $key=$path
+            continue
+        fi
+        #patha=$(readlink -m $dir/$path)
+        patha=$dir/$path
         echo "export $key=$patha"
         export $key=$patha
     done < $yml
