@@ -32,7 +32,7 @@
 	; lg = log --pretty=oneline --date-order --graph --all --decorate
   lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
 [user]
-    email = reckbo@bwh.harvard.edu
+    email = ryan.eckbo@gmail.com
     name = reckbo
 [github]
 	user = reckbo
