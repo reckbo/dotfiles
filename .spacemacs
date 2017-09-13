@@ -30,7 +30,8 @@ values."
    dotspacemacs-configuration-layer-path '()
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(yaml
+   '(sql
+     yaml
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
@@ -383,22 +384,24 @@ you should place your code here."
     ;;    (R . t))
     ;;  )
 
+  (add-to-list 'exec-path "~/.local/bin/")
+
   (define-key evil-normal-state-map (kbd "q") 'delete-window)
   (defun back-window ()
     (interactive)
     (other-window -1))
-
-  (intero-global-mode 1)
   (define-key global-map (kbd "M-l") 'company-complete)
   (define-key global-map (kbd "M-w") 'spacemacs/alternate-window)
   (define-key global-map (kbd "M-e") 'spacemacs/projectile-shell-pop)
   (define-key global-map (kbd "M-k") 'other-window)
   (define-key global-map (kbd "M-j") 'back-window)
   (define-key evil-normal-state-map (kbd "SPC w a") 'ace-window)
+  ;; (define-key global-map (kbd "M-f") 'intero-repl-load)
+  (with-eval-after-load 'intero
+    (flycheck-add-next-checker 'intero '(warning . haskell-hlint)))
   (define-key global-map (kbd "M-f") 'intero-repl-load)
-  (define-key global-map (kbd "M-g") 'haskell-intero/pop-to-intero)
-
-  (add-to-list 'exec-path "~/.local/bin/")
+  (define-key global-map (kbd "M-g") 'haskell-intero/pop-to-repl)
+  (define-key global-map (kbd "M-o") 'ace-delete-window)
 
   ;; (setq org-confirm-babel-evaluate nil)
 
@@ -491,7 +494,7 @@ This function is called at the very end of Spacemacs initialization."
     ("#dc322f" "#cb4b16" "#b58900" "#546E00" "#B4C342" "#00629D" "#2aa198" "#d33682" "#6c71c4")))
  '(package-selected-packages
    (quote
-    (nix-mode helm-nixos-options company-nixos-options nixos-options ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async)))
+    (dracula-theme sqlup-mode sql-indent ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async)))
  '(pos-tip-background-color "#073642")
  '(pos-tip-foreground-color "#93a1a1")
  '(smartrep-mode-line-active-bg (solarized-color-blend "#859900" "#073642" 0.2))
