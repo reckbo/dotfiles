@@ -85,13 +85,14 @@ values."
      (haskell :variables
             ;; haskell-enable-ghc-mod-support nil
             ;; haskell-enable-ghci-ng-support t
-              haskell-process-type 'stack-ghci
-            haskell-completion-backend 'intero
-              ;; haskell-completion-backend 'company-ghci
+            haskell-process-type 'stack-ghci
             haskell-process-args-stack-ghci '("--ghc-options=-ferror-spans" "--with-ghc=intero")
-            ;; haskell-enable-hindent-style "gibiansky"
-            haskell-enable-hindent-style "chris-done"
-            ;; haskell-enable-hindent-style "johan-tibell"
+            haskell-completion-backend 'intero
+            ;; haskell-enable-hindent-style "fundamental"
+            haskell-enable-hindent-style "johan-tibell"
+            ;; haskell-enable-hindent-style "chris-done"
+            haskell-enable-hindent-style "gibiansky"
+              ;; haskell-completion-backend 'company-ghci
             haskell-stylish-on-save t
             )
 
@@ -175,7 +176,8 @@ values."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(ujelly
+   dotspacemacs-themes '(dracula
+                         ujelly
                          spacemacs-dark
                          spacemacs-light
                          solarized-light
@@ -315,7 +317,7 @@ values."
    ;;                       text-mode
    ;;   :size-limit-kb 1000)
    ;; (default nil)
-   dotspacemacs-line-numbers nil
+   dotspacemacs-line-numbers t
    ;; Code folding method. Possible values are `evil' and `origami'.
    ;; (default 'evil)
    dotspacemacs-folding-method 'evil
@@ -356,6 +358,7 @@ executes.
  This function is mostly useful for variables that need to be set
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
+  (setq-default git-magit-status-fullscreen t)
   )
 
 (defun dotspacemacs/user-config ()
@@ -383,10 +386,12 @@ you should place your code here."
     ;;    (sqlite . t)
     ;;    (R . t))
     ;;  )
+  (setq fill-column 100)
 
   (add-to-list 'exec-path "~/.local/bin/")
 
   (define-key evil-normal-state-map (kbd "q") 'delete-window)
+  (define-key global-map (kbd "M-s") 'save-buffer)
   (defun back-window ()
     (interactive)
     (other-window -1))
@@ -487,7 +492,7 @@ This function is called at the very end of Spacemacs initialization."
  '(hl-fg-colors
    (quote
     ("#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36")))
- '(imenu-list-minor-mode t)
+ '(imenu-list-minor-mode nil)
  '(magit-diff-use-overlays nil)
  '(nrepl-message-colors
    (quote
@@ -497,6 +502,12 @@ This function is called at the very end of Spacemacs initialization."
     (dracula-theme sqlup-mode sql-indent ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async)))
  '(pos-tip-background-color "#073642")
  '(pos-tip-foreground-color "#93a1a1")
+ '(safe-local-variable-values
+   (quote
+    ((intero-targets "panel-api:lib" "panel-api:test:spec")
+     (intero-targets "firehose-server:lib" "firehose-server:test:spec")
+     (intero-targets "panel-api:lib")
+     (intero-targets "firehose-server:lib" "firehose-server:exe:firehose-server" "firehose-server:test:spec" "tvision-shared:lib"))))
  '(smartrep-mode-line-active-bg (solarized-color-blend "#859900" "#073642" 0.2))
  '(term-default-bg-color "#002b36")
  '(term-default-fg-color "#839496")

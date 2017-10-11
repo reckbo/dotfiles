@@ -18,6 +18,7 @@
 
   # networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+  networking.networkmanager.enable = true;
 
   # Select internationalisation properties.
   # i18n = {
@@ -49,25 +50,69 @@
   };
 
    environment.systemPackages = with pkgs; [
+     htop
      wget
      vim
+     ack
      git
      emacs25
      chromium
-     davmail
-     isync
+     zathura
+     #davmail
+     #isync
      html2text
      aspell
      ghc
      stack
+     cabal-install
+     cabal2nix
+     nox
+     nix-repl
      gnumake
      dropbox
      R
      pythonPackages.yapf
      gitAndTools.hub
      pandoc
-     jags
+     #jags
    ];
+
+   fonts = {
+    enableCoreFonts = true;
+    enableFontDir = true;
+    enableGhostscriptFonts = true;
+    fontconfig = {
+       defaultFonts = { 
+          monospace = [ "Source Code Pro" ];
+       };
+    };
+    fonts = with pkgs; [
+     corefonts
+     hasklig
+     inconsolata
+     source-code-pro
+     symbola
+     ubuntu_font_family
+    ];
+  };
+ # fonts = {
+ #   enableCoreFonts = true;
+ #   enableFontDir = true;
+ #   enableGhostscriptFonts = true;
+ #   fontconfig = {
+ #      defaultFonts = { 
+ #         monospace = [ "inconsolata" ];
+ #      };
+ #   };
+ #   fonts = with pkgs; [
+ #    corefonts
+ #    hasklig
+ #    inconsolata
+ #    source-code-pro
+ #    symbola
+ #    ubuntu_font_family
+ #   ];
+ # };
 
   # List services that you want to enable:
 
@@ -81,12 +126,17 @@
   # Enable the X11 windowing system.
    services.xserver.enable = true;
    services.xserver.layout = "us";
+   #services.xserver.libinput.naturalScrolling = false;
+   services.xserver.libinput.enable = true;
+   #services.xserver.libinput.middleEmulation = true;
+   #services.xserver.libinput.tapping = true;
   # services.xserver.xkbOptions = "eurosign:e";
 
   # Enable the KDE Desktop Environment.
   # services.xserver.displayManager.kdm.enable = true;
   # services.xserver.desktopManager.kde4.enable = true;
-  services.xserver.desktopManager.gnome3.enable = true;
+   services.xserver.desktopManager.plasma5.enable = true;
+  # services.xserver.desktopManager.gnome3.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.extraUsers.reckbo = {
