@@ -47,3 +47,7 @@ doc/tags
 *.mgz
 
 .#*
+.s2n
+.dir-locals.el
+tags
+TAGS
