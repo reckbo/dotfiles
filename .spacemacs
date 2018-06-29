@@ -3,9 +3,8 @@
 ;; It must be stored in your home directory.
 
 (defun dotspacemacs/layers ()
-  "Configuration Layers declaration.
-You should not put any user code in this function besides modifying the variable
-values."
+  "Layer configuration:
+This function should only modify configuration layer settings."
   (setq-default
    ;; Base distribution to use. This is a layer contained in the directory
    ;; `+distribution'. For now available distributions are `spacemacs-base'
@@ -21,107 +20,104 @@ values."
    ;; variable `dotspacemacs-configuration-layers' to install it.
    ;; (default 'unused)
    dotspacemacs-enable-lazy-installation 'unused
+
    ;; If non-nil then Spacemacs will ask for confirmation before installing
    ;; a layer lazily. (default t)
    dotspacemacs-ask-for-lazy-installation t
+
    ;; If non-nil layers with lazy install support are lazy installed.
    ;; List of additional paths where to look for configuration layers.
    ;; Paths must have a trailing slash (i.e. `~/.mycontribs/')
    dotspacemacs-configuration-layer-path '()
+
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(sql
-     yaml
-     ;; ----------------------------------------------------------------
-     ;; Example of useful layers you may want to use right away.
-     ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
-     ;; <M-m f e R> (Emacs style) to install them.
-     ;; ----------------------------------------------------------------
-
-     ;; Tools
+   '(
+     javascript
+     csv
      helm
-     imenu-list
-     ;; spell-checking
      (auto-completion
       :variables
       auto-completion-enable-help-tooltip t
       auto-completion-enable-sort-by-usage t)
 
-     ;; Improve dired navigation (including '-' for navigating up folders)
-     vinegar
-
-     themes-megapack
-
-     ;; Coding
+     git
      syntax-checking
      version-control
-     git
-
-     ;; Languages
-     nixos
-     (org :variables
-          org-enable-github-support t
-          org-projectile-file "README.md"
-          org-file-apps
-          '((auto-mode . emacs)
-            ("\\.x?html?\\'" . "chromium %s")
-            ("\\.pdf\\'" . "xdg-ope, \"%s\"")
-            ("\\.pdf::\\([0-9]+\\)\\'" . "xdg-open \"%s\" -p %1")
-            ("\\.pdf.xoj" . "xournal %s"))
-          )
-     yaml
-     bibtex
-     emacs-lisp
-     markdown
-     html
-     ;; ess
-     (shell :variables
-            ;; shell-default-height full
-            shell-default-position 'full
-            shell-default-shell 'eshell ;; term, ansi-term, multi-term, shell
-            )
-     python
+     imenu-list
+     vinegar
      ;; polymode
-     (haskell :variables
-            ;; haskell-enable-ghc-mod-support nil
-            ;; haskell-enable-ghci-ng-support t
-            haskell-process-type 'stack-ghci
-            haskell-process-args-stack-ghci '("--ghc-options=-ferror-spans" "--with-ghc=intero")
-            haskell-completion-backend 'intero
-            ;; haskell-enable-hindent-style "fundamental"
-            haskell-enable-hindent-style "johan-tibell"
-            ;; haskell-enable-hindent-style "chris-done"
-            haskell-enable-hindent-style "gibiansky"
-              ;; haskell-completion-backend 'company-ghci
-            haskell-stylish-on-save t
-            )
+     ;; neotree
+     imenu-list
 
+     confluence
+     sql
+     bibtex
+     html
+     markdown
+     yaml
+     emacs-lisp
+     org
+     ;; (org :variables
+     ;;      org-enable-github-support t
+     ;;      org-projectile-file "README.md"
+     ;;      org-file-apps
+     ;;      '((auto-mode . emacs)
+     ;;        ("\\.x?html?\\'" . "chromium %s")
+     ;;        ("\\.pdf\\'" . "xdg-ope, \"%s\"")
+     ;;        ("\\.pdf::\\([0-9]+\\)\\'" . "xdg-open \"%s\" -p %1")
+     ;;        ("\\.pdf.xoj" . "xournal %s"))
+     ;;      )
+     (python :variables python-test-runner 'pytest)
+     (haskell :variables
+              ;; haskell-enable-ghc-mod-support nil
+              ;; haskell-enable-ghci-ng-support t
+              haskell-process-type 'stack-ghci
+              haskell-process-args-stack-ghci '("--ghc-options=-ferror-spans" "--with-ghc=intero")
+              haskell-completion-backend 'intero
+              ;; haskell-enable-hindent-style "fundamental"
+              haskell-enable-hindent-style "johan-tibell"
+              ;; haskell-enable-hindent-style "chris-done"
+              haskell-enable-hindent-style "gibiansky"
+              ;; haskell-completion-backend 'company-ghci
+              haskell-stylish-on-save t
+              )
+
+     (shell :variables
+            shell-default-height 30
+            shell-default-position 'bottom)
+     ;; spell-checking
      )
 
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
+   ;; To use a local version of a package, use the `:location' property:
+   ;; '(your-package :location "~/path/to/your-package/")
+   ;; Also include the dependencies as they will not be resolved automatically.
    dotspacemacs-additional-packages '()
+
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
+
    ;; A list of packages that will not be installed and loaded.
    dotspacemacs-excluded-packages '()
+
    ;; Defines the behaviour of Spacemacs when installing packages.
    ;; Possible values are `used-only', `used-but-keep-unused' and `all'.
-   ;; `used-only' installs only explicitly used packages and uninstall any
-   ;; unused packages as well as their unused dependencies.
-   ;; `used-but-keep-unused' installs only the used packages but won't uninstall
-   ;; them if they become unused. `all' installs *all* packages supported by
-   ;; Spacemacs and never uninstall them. (default is `used-only')
+   ;; `used-only' installs only explicitly used packages and deletes any unused
+   ;; packages as well as their unused dependencies. `used-but-keep-unused'
+   ;; installs only the used packages but won't delete unused ones. `all'
+   ;; installs *all* packages supported by Spacemacs and never uninstalls them.
+   ;; (default is `used-only')
    dotspacemacs-install-packages 'used-only))
 
 (defun dotspacemacs/init ()
-  "Initialization function.
-This function is called at the very startup of Spacemacs initialization
-before layers configuration.
-You should not put any user code in there besides modifying the variable
-values."
+  "Initialization:
+This function is called at the very beginning of Spacemacs startup,
+before layer configuration.
+It should only modify the values of Spacemacs settings."
   ;; This setq-default sexp is an exhaustive list of all the supported
   ;; spacemacs settings.
   (setq-default
@@ -132,17 +128,37 @@ values."
    ;; `--insecure' which forces the value of this variable to nil.
    ;; (default t)
    dotspacemacs-elpa-https t
+
    ;; Maximum allowed time in seconds to contact an ELPA repository.
+   ;; (default 5)
    dotspacemacs-elpa-timeout 5
-   ;; If non nil then spacemacs will check for updates at startup
+
+   ;; Set `gc-cons-threshold' and `gc-cons-percentage' when startup finishes.
+   ;; This is an advanced option and should not be changed unless you suspect
+   ;; performance issues due to garbage collection operations.
+   ;; (default '(100000000 0.1))
+   dotspacemacs-gc-cons '(100000000 0.1)
+
+   ;; If non-nil then Spacelpa repository is the primary source to install
+   ;; a locked version of packages. If nil then Spacemacs will install the
+   ;; latest version of packages from MELPA. (default nil)
+   dotspacemacs-use-spacelpa nil
+
+   ;; If non-nil then verify the signature for downloaded Spacelpa archives.
+   ;; (default nil)
+   dotspacemacs-verify-spacelpa-archives nil
+
+   ;; If non-nil then spacemacs will check for updates at startup
    ;; when the current branch is not `develop'. Note that checking for
    ;; new versions works via git commands, thus it calls GitHub services
    ;; whenever you start Emacs. (default nil)
    dotspacemacs-check-for-update nil
+
    ;; If non-nil, a form that evaluates to a package directory. For example, to
    ;; use different package directories for different Emacs versions, set this
-   ;; to `emacs-version'.
-   dotspacemacs-elpa-subdirectory nil
+   ;; to `emacs-version'. (default 'emacs-version)
+   dotspacemacs-elpa-subdirectory 'emacs-version
+
    ;; One of `vim', `emacs' or `hybrid'.
    ;; `hybrid' is like `vim' except that `insert state' is replaced by the
    ;; `hybrid state' with `emacs' key bindings. The value can also be a list
@@ -150,8 +166,10 @@ values."
    ;; section of the documentation for details on available variables.
    ;; (default 'vim)
    dotspacemacs-editing-style 'vim
-   ;; If non nil output loading progress in `*Messages*' buffer. (default nil)
+
+   ;; If non-nil output loading progress in `*Messages*' buffer. (default nil)
    dotspacemacs-verbose-loading nil
+
    ;; Specify the startup banner. Default value is `official', it displays
    ;; the official spacemacs logo. An integer value is the index of text
    ;; banner, `random' chooses a random text banner in `core/banners'
@@ -159,45 +177,56 @@ values."
    ;; by your Emacs build.
    ;; If the value is nil then no banner is displayed. (default 'official)
    dotspacemacs-startup-banner 'official
+
    ;; List of items to show in startup buffer or an association list of
    ;; the form `(list-type . list-size)`. If nil then it is disabled.
    ;; Possible values for list-type are:
-   ;; `recents' `bookmarks' `projects' `agenda' `todos'."
+   ;; `recents' `bookmarks' `projects' `agenda' `todos'.
    ;; List sizes may be nil, in which case
    ;; `spacemacs-buffer-startup-lists-length' takes effect.
    dotspacemacs-startup-lists '((recents . 5)
-                                (projects . 7)
-                                (todos . 3)
-                                )
-   ;; True if the home buffer should respond to resize events.
+                                (projects . 7))
+
+   ;; True if the home buffer should respond to resize events. (default t)
    dotspacemacs-startup-buffer-responsive t
+
    ;; Default major mode of the scratch buffer (default `text-mode')
    dotspacemacs-scratch-mode 'text-mode
+
+   ;; Initial message in the scratch buffer, such as "Welcome to Spacemacs!"
+   ;; (default nil)
+   dotspacemacs-initial-scratch-message nil
+
    ;; List of themes, the first of the list is loaded when spacemacs starts.
-   ;; Press <SPC> T n to cycle to the next theme in the list (works great
+   ;; Press `SPC T n' to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(dracula
-                         ujelly
-                         spacemacs-dark
-                         spacemacs-light
-                         solarized-light
-                         solarized-dark
-                         leuven
-                         zenburn
-                         wombat
-                         tango-2)
-   ;; If non nil the cursor color matches the state color in GUI Emacs.
+   dotspacemacs-themes '(spacemacs-dark
+                         spacemacs-light)
+
+   ;; Set the theme for the Spaceline. Supported themes are `spacemacs',
+   ;; `all-the-icons', `custom', `vim-powerline' and `vanilla'. The first three
+   ;; are spaceline themes. `vanilla' is default Emacs mode-line. `custom' is a
+   ;; user defined themes, refer to the DOCUMENTATION.org for more info on how
+   ;; to create your own spaceline theme. Value can be a symbol or list with\
+   ;; additional properties.
+   ;; (default '(spacemacs :separator wave :separator-scale 1.5))
+   dotspacemacs-mode-line-theme '(spacemacs :separator wave :separator-scale 1.5)
+
+   ;; If non-nil the cursor color matches the state color in GUI Emacs.
+   ;; (default t)
    dotspacemacs-colorize-cursor-according-to-state t
+
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
-   dotspacemacs-default-font '("Monospace" ;; "Source Code Pro"
-                               :size 18
+   dotspacemacs-default-font '("Source Code Pro"
+                               :size 11
                                :weight normal
-                               :width normal
-                               :powerline-scale 1.1)
-   ;; The leader key
+                               :width normal)
+
+   ;; The leader key (default "SPC")
    dotspacemacs-leader-key "SPC"
-   ;; The key used for Emacs commands (M-x) (after pressing on the leader key).
+
+   ;; The key used for Emacs commands `M-x' (after pressing on the leader key).
    ;; (default "SPC")
    dotspacemacs-emacs-command-key "SPC"
    ;; The key used for Vim Ex commands (default ":")
@@ -236,7 +265,7 @@ values."
    dotspacemacs-display-default-layout nil
    ;; If non nil then the last auto saved layouts are resume automatically upon
    ;; start. (default nil)
-   dotspacemacs-auto-resume-layouts t
+   dotspacemacs-auto-resume-layouts nil
    ;; Size (in MB) above which spacemacs will prompt to open the large file
    ;; literally to avoid performance issues. Opening a file literally means that
    ;; no major mode or minor modes are active. (default is 1)
@@ -285,7 +314,7 @@ values."
    ;; If non nil the frame is maximized when Emacs starts up.
    ;; Takes effect only if `dotspacemacs-fullscreen-at-startup' is nil.
    ;; (default nil) (Emacs 24.4+ only)
-   dotspacemacs-maximized-at-startup t
+   dotspacemacs-maximized-at-startup nil
    ;; A value from the range (0..100), in increasing opacity, which describes
    ;; the transparency level of a frame when it's active or selected.
    ;; Transparency can be toggled through `toggle-transparency'. (default 90)
@@ -317,7 +346,7 @@ values."
    ;;                       text-mode
    ;;   :size-limit-kb 1000)
    ;; (default nil)
-   dotspacemacs-line-numbers t
+   dotspacemacs-line-numbers nil
    ;; Code folding method. Possible values are `evil' and `origami'.
    ;; (default 'evil)
    dotspacemacs-folding-method 'evil
@@ -356,9 +385,8 @@ values."
 It is called immediately after `dotspacemacs/init', before layer configuration
 executes.
  This function is mostly useful for variables that need to be set
-before packages are loaded. If you are unsure, you should try in setting them in
+be  fore packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
-  (setq-default git-magit-status-fullscreen t)
   )
 
 (defun dotspacemacs/user-config ()
@@ -369,70 +397,35 @@ This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
 
-  ;; R - map ; to <-
-  ;; (setq ess-smart-S-assign-key ";")
-  ;; (ess-toggle-S-assign nil)
-  ;; (ess-toggle-S-assign nil)
-  ;; (ess-toggle-underscore nil) ; leave underscore key alone!
+  (setq-default git-magit-status-fullscreen t)
+  (add-hook 'python-mode-hook #'(lambda () (modify-syntax-entry ?_ "w")))
+  (add-hook 'haskell-mode-hook #'(lambda () (modify-syntax-entry ?_ "w")))
 
-    ;; (org-babel-do-load-languages
-    ;;  'org-babel-load-languages
-    ;;  '((J . t)
-    ;;    (calc . t)
-    ;;    (python . t)
-    ;;    (dot . t)
-    ;;    (sh . t)
-    ;;    (haskell . t)
-    ;;    (sqlite . t)
-    ;;    (R . t))
-    ;;  )
   (setq fill-column 100)
-
   (add-to-list 'exec-path "~/.local/bin/")
 
   (define-key evil-normal-state-map (kbd "q") 'delete-window)
-  (define-key global-map (kbd "M-s") 'save-buffer)
   (defun back-window ()
     (interactive)
     (other-window -1))
-  (define-key global-map (kbd "M-l") 'company-complete)
-  (define-key global-map (kbd "M-w") 'spacemacs/alternate-window)
-  (define-key global-map (kbd "M-e") 'spacemacs/projectile-shell-pop)
-  (define-key global-map (kbd "M-k") 'other-window)
   (define-key global-map (kbd "M-j") 'back-window)
-  (define-key evil-normal-state-map (kbd "SPC w a") 'ace-window)
-  ;; (define-key global-map (kbd "M-f") 'intero-repl-load)
-  (with-eval-after-load 'intero
-    (flycheck-add-next-checker 'intero '(warning . haskell-hlint)))
+  (define-key global-map (kbd "M-k") 'other-window)
   (define-key global-map (kbd "M-f") 'intero-repl-load)
-  (define-key global-map (kbd "M-g") 'haskell-intero/pop-to-repl)
   (define-key global-map (kbd "M-o") 'ace-delete-window)
-
-  ;; (setq org-confirm-babel-evaluate nil)
-
-  ;; (org-babel-do-load-languages
-  ;;  'org-babel-load-languages
-  ;;  '((J . t)
-  ;;    (calc . t)
-  ;;    (python . t)
-  ;;    (dot . t)
-  ;;    (sh . t)
-  ;;    (haskell . t)
-  ;;    (sqlite . t)
-  ;;    (R . t))
-  ;;  )
-
   (setq org-bullets-bullet-list '("○" "▶" "◉" "■"))
-
   (setq magit-repository-directories '("~/soft/"))
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '(
+     (calc . t)
+     (python . t)
+     (dot . t)
+     (sh . t)
+     ;; (haskell . t)
+     (sqlite . t)
+     (R . t)
+   ))
 
-  ;; (spacemacs/set-leader-keys-for-major-mode 'haskell-mode
-  ;;   "mht"  'ghc-show-type)
-
-  (setq org-ref-default-bibliography '("~/Dropbox/library/references.bib")
-        org-ref-pdf-directory "~/Dropbox/library/pdfs/"
-        org-ref-bibliography-notes "~/Dropbox/library/notes.org"
-        )
 
   )
 
@@ -445,7 +438,7 @@ you should place your code here."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async))))
+    (web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc company-tern tern coffee-mode ox-gfm org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download macrostep gnuplot elisp-slime-nav auto-compile packed yapfify yaml-mode xterm-color ws-butler winum which-key web-mode volatile-highlights vi-tilde-fringe uuidgen use-package toc-org tagedit sql-indent spaceline smeargle slim-mode shell-pop scss-mode sass-mode restart-emacs rainbow-delimiters pyvenv pytest pyenv-mode py-isort pug-mode popwin pip-requirements persp-mode pcre2el paradox orgit org-ref org-bullets open-junk-file neotree multi-term move-text mmm-mode markdown-toc magit-gitflow lorem-ipsum live-py-mode linum-relative link-hint less-css-mode intero indent-guide imenu-list hy-mode hungry-delete hlint-refactor hl-todo hindent highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-hoogle helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag haskell-snippets google-translate golden-ratio gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gh-md fuzzy flycheck-pos-tip flycheck-haskell flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help emmet-mode dumb-jump diminish diff-hl define-word cython-mode csv-mode company-web company-statistics company-quickhelp company-ghci company-ghc company-cabal company-anaconda column-enforce-mode cmm-mode clean-aindent-mode auto-yasnippet auto-highlight-symbol aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -462,85 +455,19 @@ This function is called at the very end of Spacemacs initialization."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(compilation-message-face (quote default))
- '(cua-global-mark-cursor-color "#2aa198")
- '(cua-normal-cursor-color "#839496")
- '(cua-overwrite-cursor-color "#b58900")
- '(cua-read-only-cursor-color "#859900")
- '(evil-want-Y-yank-to-eol nil)
- '(fci-rule-color "#073642" t)
- '(highlight-changes-colors (quote ("#d33682" "#6c71c4")))
- '(highlight-symbol-colors
-   (--map
-    (solarized-color-blend it "#002b36" 0.25)
-    (quote
-     ("#b58900" "#2aa198" "#dc322f" "#6c71c4" "#859900" "#cb4b16" "#268bd2"))))
- '(highlight-symbol-foreground-color "#93a1a1")
- '(highlight-tail-colors
-   (quote
-    (("#073642" . 0)
-     ("#546E00" . 20)
-     ("#00736F" . 30)
-     ("#00629D" . 50)
-     ("#7B6000" . 60)
-     ("#8B2C02" . 70)
-     ("#93115C" . 85)
-     ("#073642" . 100))))
- '(hl-bg-colors
-   (quote
-    ("#7B6000" "#8B2C02" "#990A1B" "#93115C" "#3F4D91" "#00629D" "#00736F" "#546E00")))
- '(hl-fg-colors
-   (quote
-    ("#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36")))
- '(imenu-list-minor-mode nil)
- '(magit-diff-use-overlays nil)
- '(nrepl-message-colors
-   (quote
-    ("#dc322f" "#cb4b16" "#b58900" "#546E00" "#B4C342" "#00629D" "#2aa198" "#d33682" "#6c71c4")))
  '(package-selected-packages
    (quote
-    (dracula-theme sqlup-mode sql-indent ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async)))
- '(pos-tip-background-color "#073642")
- '(pos-tip-foreground-color "#93a1a1")
+    (magit-svn web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc company-tern tern coffee-mode ox-gfm org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download macrostep gnuplot elisp-slime-nav auto-compile packed yapfify yaml-mode xterm-color ws-butler winum which-key web-mode volatile-highlights vi-tilde-fringe uuidgen use-package toc-org tagedit sql-indent spaceline smeargle slim-mode shell-pop scss-mode sass-mode restart-emacs rainbow-delimiters pyvenv pytest pyenv-mode py-isort pug-mode popwin pip-requirements persp-mode pcre2el paradox orgit org-ref org-bullets open-junk-file neotree multi-term move-text mmm-mode markdown-toc magit-gitflow lorem-ipsum live-py-mode linum-relative link-hint less-css-mode intero indent-guide imenu-list hy-mode hungry-delete hlint-refactor hl-todo hindent highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-hoogle helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag haskell-snippets google-translate golden-ratio gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gh-md fuzzy flycheck-pos-tip flycheck-haskell flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help emmet-mode dumb-jump diminish diff-hl define-word cython-mode csv-mode company-web company-statistics company-quickhelp company-ghci company-ghc company-cabal company-anaconda column-enforce-mode cmm-mode clean-aindent-mode auto-yasnippet auto-highlight-symbol aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell)))
  '(safe-local-variable-values
    (quote
-    ((intero-targets "panel-api:lib" "panel-api:test:spec")
-     (intero-targets "firehose-server:lib" "firehose-server:test:spec")
-     (intero-targets "panel-api:lib")
-     (intero-targets "firehose-server:lib" "firehose-server:exe:firehose-server" "firehose-server:test:spec" "tvision-shared:lib"))))
- '(smartrep-mode-line-active-bg (solarized-color-blend "#859900" "#073642" 0.2))
- '(term-default-bg-color "#002b36")
- '(term-default-fg-color "#839496")
- '(vc-annotate-background nil)
- '(vc-annotate-background-mode nil)
- '(vc-annotate-color-map
-   (quote
-    ((20 . "#dc322f")
-     (40 . "#c85d17")
-     (60 . "#be730b")
-     (80 . "#b58900")
-     (100 . "#a58e00")
-     (120 . "#9d9100")
-     (140 . "#959300")
-     (160 . "#8d9600")
-     (180 . "#859900")
-     (200 . "#669b32")
-     (220 . "#579d4c")
-     (240 . "#489e65")
-     (260 . "#399f7e")
-     (280 . "#2aa198")
-     (300 . "#2898af")
-     (320 . "#2793ba")
-     (340 . "#268fc6")
-     (360 . "#268bd2"))))
- '(vc-annotate-very-old-color nil)
- '(weechat-color-list
-   (quote
-    (unspecified "#002b36" "#073642" "#990A1B" "#dc322f" "#546E00" "#859900" "#7B6000" "#b58900" "#00629D" "#268bd2" "#93115C" "#d33682" "#00736F" "#2aa198" "#839496" "#657b83")))
- '(xterm-color-names
-   ["#073642" "#dc322f" "#859900" "#b58900" "#268bd2" "#d33682" "#2aa198" "#eee8d5"])
- '(xterm-color-names-bright
-   ["#002b36" "#cb4b16" "#586e75" "#657b83" "#839496" "#6c71c4" "#93a1a1" "#fdf6e3"]))
+    ((intero-targets "build:lib" "build:test:test")
+     (intero-targets "ingest-api:lib" "ingest-driver:lib" "ingest-driver-database:lib" "ingest-integration:lib" "ingest-manager:lib" "ingest-metrics:lib" "ingest-settings:lib" "ingest-tracker:lib" "scripts:lib")
+     (intero-targets "ingest-api:lib" "ingest-core:lib" "ingest-driver:lib" "ingest-driver-database:lib" "ingest-integration:lib" "ingest-manager:lib" "ingest-metrics:lib" "ingest-settings:lib" "ingest-tracker:lib" "ingest-tracker-database:lib" "scripts:lib")
+     (intero-targets "ingest-api:lib" "ingest-core:lib" "ingest-driver-database:lib" "ingest-integration:lib" "ingest-manager:lib" "ingest-metrics:lib" "ingest-settings:lib" "ingest-tracker:lib" "ingest-tracker-database:lib" "scripts:lib")
+     (intero-targets "ingest-driver:lib" "ingest-driver:test:spec")
+     (intero-targets "ingest-api:lib" "ingest-api:test:spec")
+     (javascript-backend . tern)
+     (javascript-backend . lsp)))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

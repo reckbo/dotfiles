@@ -1,8 +1,9 @@
 # . ~/hub_completion.sh
-. ~/dotfiles/gitcompletion.sh
 export soft=~/soft
+source $soft/dotfiles/gitcompletion.sh
 export PATH=$soft/tvision-misc/util/scripts:$PATH
 export PATH=~/.local/bin:$PATH
+export PYTHONSTARTUP=$HOME/.pythonrc
 
 export GITAWAREPROMPT=~/.bash/git-aware-prompt
 source "${GITAWAREPROMPT}/main.sh"
@@ -22,16 +23,6 @@ _ssh()
     return 0
 }
 complete -F _ssh ssh
+complete -F _ssh scp
 
-_dbsh()
-{
-    local cur prev opts
-    COMPREPLY=()
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    prev="${COMP_WORDS[COMP_CWORD-1]}"
-    opts="ingest-tracker firehose"
-
-    COMPREPLY=( $(compgen -W "$opts" -- ${cur}) )
-    return 0
-}
-complete -F _dbsh "db.sh"
+eval "$(direnv hook bash)"

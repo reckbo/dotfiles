@@ -1,0 +1,10 @@
+import rlcompleter, readline
+readline.parse_and_bind("tab: complete")
+readline.write_history_file('/home/reckbo/.python_history')
+try:
+   from plumbum import local
+   from plumbum import cmd
+   from plumbum.cmd import ls, cat, grep, wc
+   p = local.path
+except:
+   pass
