@@ -1,7 +1,6 @@
 # . ~/hub_completion.sh
 export soft=~/soft
 source $soft/dotfiles/gitcompletion.sh
-export PATH=$soft/tvision-misc/util/scripts:$PATH
 export PATH=~/.local/bin:$PATH
 export PYTHONSTARTUP=$HOME/.pythonrc
 
