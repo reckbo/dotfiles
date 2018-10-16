@@ -1,3 +1,4 @@
 --ignore-dir=.stack-work
 --ignore-dir=.s2n
 --ignore-dir=doc
+--ignore-dir=.venv
