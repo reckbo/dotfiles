@@ -32,7 +32,9 @@ This function should only modify configuration layer settings."
 
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(
+   '(shell-scripts
+     rust
+     octave
      javascript
      csv
      helm
@@ -40,12 +42,14 @@ This function should only modify configuration layer settings."
       :variables
       auto-completion-enable-help-tooltip t
       auto-completion-enable-sort-by-usage t)
+     graphviz
+
+     themes-megapack
 
      graphviz
      git
      syntax-checking
      version-control
-     imenu-list
      vinegar
      ;; polymode
      ;; neotree
@@ -95,8 +99,8 @@ This function should only modify configuration layer settings."
    ;; configuration in `dotspacemacs/user-config'.
    ;; To use a local version of a package, use the `:location' property:
    ;; '(your-package :location "~/path/to/your-package/")
-   ;; Also include the dependencies as they will not be resolved automatically.
-   dotspacemacs-additional-packages '()
+   ;; Also include the dependencies as they will- not be resolved automatically.
+   dotspacemacs-additional-packages '(ob-async vue-mode)
 
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -201,7 +205,8 @@ It should only modify the values of Spacemacs settings."
    ;; Press `SPC T n' to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(spacemacs-dark
-                         spacemacs-light)
+                         spacemacs-light
+                         )
 
    ;; Set the theme for the Spaceline. Supported themes are `spacemacs',
    ;; `all-the-icons', `custom', `vim-powerline' and `vanilla'. The first three
@@ -224,7 +229,6 @@ It should only modify the values of Spacemacs settings."
    ;;                             :width normal)
    dotspacemacs-default-font '("Menlo"
                                :size 14
-                               :weight normal
                                :width normal)
 
    ;; The leader key (default "SPC")
@@ -311,7 +315,7 @@ It should only modify the values of Spacemacs settings."
    dotspacemacs-loading-progress-bar t
    ;; If non nil the frame is fullscreen when Emacs starts up. (default nil)
    ;; (Emacs 24.4+ only)
-   dotspacemacs-fullscreen-at-startup nil
+   dotspacemacs-fullscreen-at-startup t
    ;; If non nil `spacemacs/toggle-fullscreen' will not use native fullscreen.
    ;; Use to disable fullscreen animations in OSX. (default nil)
    dotspacemacs-fullscreen-use-non-native nil
@@ -430,8 +434,7 @@ you should place your code here."
      (R . t)
      (dot . t)
    ))
-
-
+  (require 'ob-async)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
@@ -462,7 +465,7 @@ This function is called at the very end of Spacemacs initialization."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (ox-reveal powerline spinner pdf-tools key-chord ivy tablist org-plus-contrib markdown-mode hydra htmlize parent-mode projectile request helm-bibtex parsebib haml-mode gitignore-mode fringe-helper git-gutter+ git-gutter flycheck pkg-info epl flx magit magit-popup git-commit ghub with-editor smartparens iedit anzu evil goto-chg undo-tree highlight web-completion-data dash-functional pos-tip ghc haskell-mode company bind-map bind-key biblio biblio-core yasnippet anaconda-mode pythonic f dash s helm avy helm-core async auto-complete popup web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc company-tern tern coffee-mode ox-gfm org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download macrostep gnuplot elisp-slime-nav auto-compile packed yapfify yaml-mode xterm-color ws-butler winum which-key web-mode volatile-highlights vi-tilde-fringe uuidgen use-package toc-org tagedit sql-indent spaceline smeargle slim-mode shell-pop scss-mode sass-mode restart-emacs rainbow-delimiters pyvenv pytest pyenv-mode py-isort pug-mode popwin pip-requirements persp-mode pcre2el paradox orgit org-ref org-bullets open-junk-file neotree multi-term move-text mmm-mode markdown-toc magit-gitflow lorem-ipsum live-py-mode linum-relative link-hint less-css-mode intero indent-guide imenu-list hy-mode hungry-delete hlint-refactor hl-todo hindent highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-hoogle helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag haskell-snippets google-translate golden-ratio gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gh-md fuzzy flycheck-pos-tip flycheck-haskell flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help emmet-mode dumb-jump diminish diff-hl define-word cython-mode csv-mode company-web company-statistics company-quickhelp company-ghci company-ghc company-cabal company-anaconda column-enforce-mode cmm-mode clean-aindent-mode auto-yasnippet auto-highlight-symbol aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell))))
+    (ob-ipython insert-shebang helm-gtags ggtags flycheck-bashate fish-mode counsel-gtags company-shell powerline spinner pdf-tools key-chord ivy tablist org-plus-contrib markdown-mode hydra htmlize parent-mode projectile request helm-bibtex parsebib haml-mode gitignore-mode fringe-helper git-gutter+ git-gutter flycheck pkg-info epl flx magit magit-popup git-commit ghub with-editor smartparens iedit anzu evil goto-chg undo-tree highlight web-completion-data dash-functional pos-tip ghc haskell-mode company bind-map bind-key biblio biblio-core yasnippet anaconda-mode pythonic f dash s helm avy helm-core async auto-complete popup web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc company-tern tern coffee-mode ox-gfm org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download macrostep gnuplot elisp-slime-nav auto-compile packed yapfify yaml-mode xterm-color ws-butler winum which-key web-mode volatile-highlights vi-tilde-fringe uuidgen use-package toc-org tagedit sql-indent spaceline smeargle slim-mode shell-pop scss-mode sass-mode restart-emacs rainbow-delimiters pyvenv pytest pyenv-mode py-isort pug-mode popwin pip-requirements persp-mode pcre2el paradox orgit org-ref org-bullets open-junk-file neotree multi-term move-text mmm-mode markdown-toc magit-gitflow lorem-ipsum live-py-mode linum-relative link-hint less-css-mode intero indent-guide imenu-list hy-mode hungry-delete hlint-refactor hl-todo hindent highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-hoogle helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag haskell-snippets google-translate golden-ratio gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gh-md fuzzy flycheck-pos-tip flycheck-haskell flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help emmet-mode dumb-jump diminish diff-hl define-word cython-mode csv-mode company-web company-statistics company-quickhelp company-ghci company-ghc company-cabal company-anaconda column-enforce-mode cmm-mode clean-aindent-mode auto-yasnippet auto-highlight-symbol aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

@@ -1,10 +1,4 @@
-import rlcompleter, readline
+import rlcompleter, readline, os
+HOME = os.environ.get('HOME')
 readline.parse_and_bind("tab: complete")
-readline.write_history_file('/home/reckbo/.python_history')
-try:
-   from plumbum import local
-   from plumbum import cmd
-   from plumbum.cmd import ls, cat, grep, wc
-   p = local.path
-except:
-   pass
+readline.write_history_file(os.path.join(HOME, '.python_history'))

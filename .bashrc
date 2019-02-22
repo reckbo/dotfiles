@@ -1,6 +1,10 @@
 # . ~/hub_completion.sh
-export soft=~/soft
-source $soft/dotfiles/gitcompletion.sh
+
+export CLICOLOR=1
+export LSCOLORS=gxBxhxDxfxhxhxhxhxcxcx
+
+export SOFT=~/soft
+source $SOFT/dotfiles/gitcompletion.sh
 export PATH=~/.local/bin:$PATH
 export PYTHONSTARTUP=$HOME/.pythonrc
 
@@ -11,7 +15,7 @@ export PS1="\${debian_chroot:+(\$debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]
 export CLICOLOR=1
 export LSCOLORS=gxBxhxDxfxhxhxhxhxcxcx
 alias R='R --no-save'
-alias ll='ls -l'
+alias ll='ls -Fhl'
 
 _ssh()
 {
