@@ -41,6 +41,7 @@ This function should only modify configuration layer settings."
      helm
      (auto-completion
       :variables
+      auto-completion-enable-snippets-in-popup t
       auto-completion-enable-help-tooltip t
       auto-completion-enable-sort-by-usage t)
      graphviz
@@ -62,7 +63,11 @@ This function should only modify configuration layer settings."
      markdown
      yaml
      emacs-lisp
-     (org :variables org-enable-reveal-js-support t)
+     (org :variables
+          org-enable-reveal-js-support t
+          org-want-todo-bindings t
+          org-agenda-files '("~/org")
+          org-enforce-todo-dependencies t)
      ;; (org :variables
      ;;      org-enable-github-support t
      ;;      org-projectile-file "README.md"
@@ -75,7 +80,7 @@ This function should only modify configuration layer settings."
      ;;      )
      (python :variables
              python-test-runner 'pytest
-             python-backend 'pyls)
+             python-backend 'pls)
      (haskell :variables
               ;; haskell-enable-ghc-mod-support nil
               ;; haskell-enable-ghci-ng-support t
@@ -94,6 +99,9 @@ This function should only modify configuration layer settings."
             shell-default-height 30
             shell-default-position 'bottom)
      ;; spell-checking
+     ;; syntax-checking
+     treemacs
+     ;; version-control
      )
 
    ;; List of additional packages that will be installed without being
@@ -244,13 +252,13 @@ It should only modify the values of Spacemacs settings."
 
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
-   ;; dotspacemacs-default-font '("Soure Code Pro"
-   ;;                             :size 16
-   ;;                             :weight light
-   ;;                             :width normal)
-   dotspacemacs-default-font '("Menlo"
+   dotspacemacs-default-font '("Soure Code Pro"
                                :size 14
+                               :weight light
                                :width normal)
+   ;; dotspacemacs-default-font '("Menlo"
+   ;;                             :size 14
+   ;;                             :width normal)
 
    ;; The leader key (default "SPC")
    dotspacemacs-leader-key "SPC"
@@ -319,6 +327,7 @@ It should only modify the values of Spacemacs settings."
    ;; Which-key delay in seconds. The which-key buffer is the popup listing
    ;; the commands bound to the current keystroke sequence. (default 0.4)
    dotspacemacs-which-key-delay 0.4
+
    ;; Which-key frame position. Possible values are `right', `bottom' and
    ;; `right-then-bottom'. right-then-bottom tries to display the frame to the
    ;; right; if there is insufficient space it displays it at the bottom.
@@ -506,7 +515,33 @@ you should place your code here."
   ;; Org
   (setq org-confirm-babel-evaluate nil)
   ;; Don't include blank line between headings when folding
-  (setq org-cycle-separator-lines 1)
+  ;; (setq org-cycle-separator-lines 1)
+
+  (defun my/org-checkbox-todo ()
+    "Switch header TODO state to DONE when all checkboxes are ticked, to TODO otherwise"
+    (let ((todo-state (org-get-todo-state)) beg end)
+      (unless (not todo-state)
+        (save-excursion
+          (org-back-to-heading t)
+          (setq beg (point))
+          (end-of-line)
+          (setq end (point))
+          (goto-char beg)
+          (if (re-search-forward "\\[\\([0-9]*%\\)\\]\\|\\[\\([0-9]*\\)/\\([0-9]*\\)\\]"
+                                 end t)
+              (if (match-end 1)
+                  (if (equal (match-string 1) "100%")
+                      (unless (string-equal todo-state "DONE")
+                        (org-todo 'done))
+                    (unless (string-equal todo-state "TODO")
+                      (org-todo 'todo)))
+                (if (and (> (match-end 2) (match-beginning 2))
+                         (equal (match-string 2) (match-string 3)))
+                    (unless (string-equal todo-state "DONE")
+                      (org-todo 'done))
+                  (unless (string-equal todo-state "TODO")
+                    (org-todo 'todo)))))))))
+  (add-hook 'org-checkbox-statistics-hook 'my/org-checkbox-todo)
 
   ;;; display/update images in the buffer after I evaluate
   (add-hook 'org-babel-after-execute-hook 'org-display-inline-images 'append)
@@ -569,10 +604,14 @@ This function is called at the very end of Spacemacs initialization."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(fill-column 100)
  '(org-M-RET-may-split-line nil)
+ '(org-startup-with-inline-images nil)
  '(package-selected-packages
    (quote
-    (powerline spinner pdf-tools key-chord ivy tablist org-plus-contrib markdown-mode hydra htmlize parent-mode projectile request helm-bibtex parsebib haml-mode gitignore-mode fringe-helper git-gutter+ git-gutter flycheck pkg-info epl flx magit magit-popup git-commit ghub with-editor smartparens iedit anzu evil goto-chg undo-tree highlight web-completion-data dash-functional pos-tip ghc haskell-mode company bind-map bind-key biblio biblio-core yasnippet anaconda-mode pythonic f dash s helm avy helm-core async auto-complete popup web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc company-tern tern coffee-mode ox-gfm org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download macrostep gnuplot elisp-slime-nav auto-compile packed yapfify yaml-mode xterm-color ws-butler winum which-key web-mode volatile-highlights vi-tilde-fringe uuidgen use-package toc-org tagedit sql-indent spaceline smeargle slim-mode shell-pop scss-mode sass-mode restart-emacs rainbow-delimiters pyvenv pytest pyenv-mode py-isort pug-mode popwin pip-requirements persp-mode pcre2el paradox orgit org-ref org-bullets open-junk-file neotree multi-term move-text mmm-mode markdown-toc magit-gitflow lorem-ipsum live-py-mode linum-relative link-hint less-css-mode intero indent-guide imenu-list hy-mode hungry-delete hlint-refactor hl-todo hindent highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-hoogle helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag haskell-snippets google-translate golden-ratio gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gh-md fuzzy flycheck-pos-tip flycheck-haskell flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help emmet-mode dumb-jump diminish diff-hl define-word cython-mode csv-mode company-web company-statistics company-quickhelp company-ghci company-ghc company-cabal company-anaconda column-enforce-mode cmm-mode clean-aindent-mode auto-yasnippet auto-highlight-symbol aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell))))
+    (powerline spinner pdf-tools key-chord ivy tablist org-plus-contrib markdown-mode hydra htmlize parent-mode projectile request helm-bibtex parsebib haml-mode gitignore-mode fringe-helper git-gutter+ git-gutter flycheck pkg-info epl flx magit magit-popup git-commit ghub with-editor smartparens iedit anzu evil goto-chg undo-tree highlight web-completion-data dash-functional pos-tip ghc haskell-mode company bind-map bind-key biblio biblio-core yasnippet anaconda-mode pythonic f dash s helm avy helm-core async auto-complete popup web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc company-tern tern coffee-mode ox-gfm org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download macrostep gnuplot elisp-slime-nav auto-compile packed yapfify yaml-mode xterm-color ws-butler winum which-key web-mode volatile-highlights vi-tilde-fringe uuidgen use-package toc-org tagedit sql-indent spaceline smeargle slim-mode shell-pop scss-mode sass-mode restart-emacs rainbow-delimiters pyvenv pytest pyenv-mode py-isort pug-mode popwin pip-requirements persp-mode pcre2el paradox orgit org-ref org-bullets open-junk-file neotree multi-term move-text mmm-mode markdown-toc magit-gitflow lorem-ipsum live-py-mode linum-relative link-hint less-css-mode intero indent-guide imenu-list hy-mode hungry-delete hlint-refactor hl-todo hindent highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-hoogle helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag haskell-snippets google-translate golden-ratio gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gh-md fuzzy flycheck-pos-tip flycheck-haskell flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help emmet-mode dumb-jump diminish diff-hl define-word cython-mode csv-mode company-web company-statistics company-quickhelp company-ghci company-ghc company-cabal company-anaconda column-enforce-mode cmm-mode clean-aindent-mode auto-yasnippet auto-highlight-symbol aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell)))
+ '(password-cache nil)
+ '(tramp-verbose 6 nil (tramp)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
